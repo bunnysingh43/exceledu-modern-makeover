@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, BookOpen, Clock, Users } from 'lucide-react';
+import { ArrowRight, BookOpen, Clock, Users, GraduationCap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
@@ -21,10 +21,12 @@ export function CourseCard({ title, category, description, image, href, duration
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       whileHover={{ y: -10 }}
-      className="group bg-background rounded-[2rem] overflow-hidden border border-border shadow-elegant flex flex-col h-full"
+      className="group bg-background rounded-[3.5rem] overflow-hidden border border-border shadow-elegant flex flex-col h-full noise relative"
     >
+      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      
       {/* Image Wrapper */}
-      <div className="relative h-64 overflow-hidden">
+      <div className="relative h-72 overflow-hidden m-4 rounded-[2.5rem]">
         <img 
           src={image} 
           alt={title}
@@ -41,37 +43,32 @@ export function CourseCard({ title, category, description, image, href, duration
       </div>
 
       {/* Content */}
-      <div className="p-8 flex-1 flex flex-col">
-        <h3 className="text-2xl font-serif font-black mb-4 group-hover:text-primary transition-colors leading-tight">
+      <div className="p-10 flex-1 flex flex-col">
+        <h3 className="text-3xl font-serif font-black mb-4 group-hover:text-primary transition-colors leading-[1.1] tracking-tight">
           {title}
         </h3>
-        <p className="text-foreground/60 text-sm leading-relaxed mb-8 flex-1">
+        <p className="text-foreground/60 text-base leading-relaxed mb-8 flex-1">
           {description}
         </p>
 
         {/* Stats */}
-        {(duration || students) && (
-          <div className="flex items-center gap-6 mb-8 py-4 border-y border-border">
-            {duration && (
-              <div className="flex items-center gap-2 text-foreground/40 text-xs font-bold uppercase tracking-wider">
-                <Clock size={14} className="text-primary" />
-                {duration}
-              </div>
-            )}
-            {students && (
-              <div className="flex items-center gap-2 text-foreground/40 text-xs font-bold uppercase tracking-wider">
-                <Users size={14} className="text-primary" />
-                {students}
-              </div>
-            )}
+        <div className="flex items-center gap-6 mb-10 py-6 border-y border-primary/10">
+          <div className="flex items-center gap-2 text-primary font-black text-[10px] uppercase tracking-widest">
+            <BookOpen size={16} />
+            Study Mode
           </div>
-        )}
+          <div className="w-1.5 h-1.5 rounded-full bg-accent" />
+          <div className="flex items-center gap-2 text-primary font-black text-[10px] uppercase tracking-widest">
+            <GraduationCap size={16} />
+            Expert Faculty
+          </div>
+        </div>
 
         {/* Action */}
         <Link to={href} className="w-full">
-          <Button className="w-full rounded-2xl h-14 font-bold flex items-center justify-between px-8 group-hover:shadow-glow transition-all">
-            Explore Course
-            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+          <Button className="w-full rounded-[1.5rem] h-16 font-black text-lg flex items-center justify-center gap-3 group-hover:shadow-glow transition-all">
+            Explore Program
+            <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
           </Button>
         </Link>
       </div>

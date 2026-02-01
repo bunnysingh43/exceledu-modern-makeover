@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 
 const CONTACT_INFO = [
   {
@@ -116,73 +117,76 @@ export default function Contact() {
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-background rounded-[3rem] p-10 lg:p-16 shadow-elegant border border-border"
+              className="bg-background rounded-[4rem] p-12 lg:p-20 shadow-elegant border border-border relative overflow-hidden noise"
             >
-              <h3 className="text-4xl font-serif font-black mb-10">Send Us a Message</h3>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black tracking-widest uppercase text-foreground/40 ml-4">Full Name</label>
-                    <Input 
+              <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2" />
+              <div className="relative z-10">
+                <h3 className="text-5xl font-serif font-black mb-12">Send Us a Message</h3>
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <label className="text-[10px] font-black tracking-[0.2em] uppercase text-primary ml-6">Full Name</label>
+                      <Input 
+                        required
+                        placeholder="John Doe"
+                        value={formState.name}
+                        onChange={(e) => setFormState({...formState, name: e.target.value})}
+                        className="rounded-3xl h-16 bg-secondary/30 border-none focus-visible:ring-primary px-8 font-bold text-lg"
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <label className="text-[10px] font-black tracking-[0.2em] uppercase text-primary ml-6">Email Address</label>
+                      <Input 
+                        required
+                        type="email"
+                        placeholder="john@example.com"
+                        value={formState.email}
+                        onChange={(e) => setFormState({...formState, email: e.target.value})}
+                        className="rounded-3xl h-16 bg-secondary/30 border-none focus-visible:ring-primary px-8 font-bold text-lg"
+                      />
+                    </div>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-8">
+                    <div className="space-y-3">
+                      <label className="text-[10px] font-black tracking-[0.2em] uppercase text-primary ml-6">Phone Number</label>
+                      <Input 
+                        required
+                        placeholder="+91 98765 43210"
+                        value={formState.phone}
+                        onChange={(e) => setFormState({...formState, phone: e.target.value})}
+                        className="rounded-3xl h-16 bg-secondary/30 border-none focus-visible:ring-primary px-8 font-bold text-lg"
+                      />
+                    </div>
+                    <div className="space-y-3">
+                      <label className="text-[10px] font-black tracking-[0.2em] uppercase text-primary ml-6">Subject</label>
+                      <Input 
+                        required
+                        placeholder="Admission Enquiry"
+                        value={formState.subject}
+                        onChange={(e) => setFormState({...formState, subject: e.target.value})}
+                        className="rounded-3xl h-16 bg-secondary/30 border-none focus-visible:ring-primary px-8 font-bold text-lg"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    <label className="text-[10px] font-black tracking-[0.2em] uppercase text-primary ml-6">Message</label>
+                    <Textarea 
                       required
-                      placeholder="John Doe"
-                      value={formState.name}
-                      onChange={(e) => setFormState({...formState, name: e.target.value})}
-                      className="rounded-2xl h-14 bg-secondary/30 border-none focus-visible:ring-primary px-6 font-medium"
+                      placeholder="Tell us how we can help..."
+                      value={formState.message}
+                      onChange={(e) => setFormState({...formState, message: e.target.value})}
+                      className="rounded-[2.5rem] min-h-[200px] bg-secondary/30 border-none focus-visible:ring-primary p-8 font-bold text-lg"
                     />
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black tracking-widest uppercase text-foreground/40 ml-4">Email Address</label>
-                    <Input 
-                      required
-                      type="email"
-                      placeholder="john@example.com"
-                      value={formState.email}
-                      onChange={(e) => setFormState({...formState, email: e.target.value})}
-                      className="rounded-2xl h-14 bg-secondary/30 border-none focus-visible:ring-primary px-6 font-medium"
-                    />
-                  </div>
-                </div>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black tracking-widest uppercase text-foreground/40 ml-4">Phone Number</label>
-                    <Input 
-                      required
-                      placeholder="+91 98765 43210"
-                      value={formState.phone}
-                      onChange={(e) => setFormState({...formState, phone: e.target.value})}
-                      className="rounded-2xl h-14 bg-secondary/30 border-none focus-visible:ring-primary px-6 font-medium"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] font-black tracking-widest uppercase text-foreground/40 ml-4">Subject</label>
-                    <Input 
-                      required
-                      placeholder="Admission Enquiry"
-                      value={formState.subject}
-                      onChange={(e) => setFormState({...formState, subject: e.target.value})}
-                      className="rounded-2xl h-14 bg-secondary/30 border-none focus-visible:ring-primary px-6 font-medium"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] font-black tracking-widest uppercase text-foreground/40 ml-4">Message</label>
-                  <Textarea 
-                    required
-                    placeholder="Tell us how we can help..."
-                    value={formState.message}
-                    onChange={(e) => setFormState({...formState, message: e.target.value})}
-                    className="rounded-3xl min-h-[150px] bg-secondary/30 border-none focus-visible:ring-primary p-6 font-medium"
-                  />
-                </div>
-                <Button 
-                  disabled={loading}
-                  className="w-full rounded-2xl h-16 text-lg font-black shadow-glow group"
-                >
-                  {loading ? 'Sending...' : 'Send Message'}
-                  {!loading && <Send size={20} className="ml-2 group-hover:translate-x-1 transition-transform" />}
-                </Button>
-              </form>
+                  <Button 
+                    disabled={loading}
+                    className="w-full rounded-[2rem] h-20 text-xl font-black shadow-glow group"
+                  >
+                    {loading ? 'Sending...' : 'Send Message'}
+                    {!loading && <Send size={24} className="ml-3 group-hover:translate-x-1 transition-transform" />}
+                  </Button>
+                </form>
+              </div>
             </motion.div>
 
             {/* Map & Visual */}

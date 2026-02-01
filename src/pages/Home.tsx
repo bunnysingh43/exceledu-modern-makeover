@@ -1,9 +1,11 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Star, CheckCircle2, Award, Users, BookOpen, Laptop, Radio, Monitor, GraduationCap } from 'lucide-react';
+import { ArrowRight, Star, CheckCircle2, Award, Users, BookOpen, Laptop, Radio, Monitor, GraduationCap, Quote, Play } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SectionHeader } from '@/components/ui/section-header';
 import { CourseCard } from '@/components/ui/course-card';
+import { cn } from '@/lib/utils';
+import { Link } from 'react-router-dom';
 
 const STATS = [
   { label: 'Years of Excellence', value: '17+', icon: <Star className="text-accent" /> },
@@ -55,6 +57,27 @@ const MODES = [
     icon: <Laptop size={32} />,
     color: 'bg-secondary'
   },
+];
+
+const TESTIMONIALS = [
+  {
+    name: 'Aditya Jain',
+    role: 'AIR 1, CA Final',
+    text: 'The concept-oriented teaching and exhaustive study material at Excel were the key factors in my success. The faculties are always available to clear doubts.',
+    image: 'https://i.pravatar.cc/150?u=1'
+  },
+  {
+    name: 'Sneha Sharma',
+    role: 'AIR 5, CA Inter',
+    text: 'Excel Educational Institute provides a perfect environment for professional studies. The regular test series helped me build confidence and manage time.',
+    image: 'https://i.pravatar.cc/150?u=2'
+  },
+  {
+    name: 'Rahul Verma',
+    role: 'AIR 12, CS Executive',
+    text: 'The best part about Excel is the personal attention each student gets. The mentors truly care about our growth and professional ethics.',
+    image: 'https://i.pravatar.cc/150?u=3'
+  }
 ];
 
 export default function Home() {
@@ -213,7 +236,7 @@ export default function Home() {
       </section>
 
       {/* Why Excel Section */}
-      <section className="section-padding">
+      <section className="section-padding overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <div className="relative">
@@ -221,7 +244,7 @@ export default function Home() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                className="relative rounded-[3rem] overflow-hidden shadow-2xl aspect-[4/5]"
+                className="relative rounded-[4rem] overflow-hidden shadow-elegant aspect-[4/5] noise"
               >
                 <img 
                   src="https://images.unsplash.com/photo-1758270704080-e3556e6794a7?auto=format&fit=crop&q=80&w=1000" 
@@ -273,6 +296,89 @@ export default function Home() {
               <Button size="lg" className="mt-12 rounded-full h-16 px-10 text-lg font-bold shadow-glow">
                 Learn More About Us
               </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="section-padding bg-secondary/5 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2" />
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <SectionHeader 
+            subtitle="Testimonials"
+            title="Voices of Success"
+            description="Hear from our students who transformed their dreams into reality with Excel's expert guidance."
+          />
+          <div className="grid lg:grid-cols-3 gap-8">
+            {TESTIMONIALS.map((t, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="glass p-10 rounded-[3rem] shadow-elegant group hover:-translate-y-2 transition-all relative"
+              >
+                <Quote className="absolute top-8 right-8 text-primary/10 w-16 h-16" />
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-primary/20">
+                    <img src={t.image} alt={t.name} className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <h4 className="text-xl font-serif font-black">{t.name}</h4>
+                    <p className="text-xs font-sans font-bold tracking-widest uppercase text-primary">{t.role}</p>
+                  </div>
+                </div>
+                <p className="text-foreground/60 leading-relaxed italic">"{t.text}"</p>
+                <div className="mt-8 flex gap-1">
+                  {[1, 2, 3, 4, 5].map(s => <Star key={s} size={14} className="text-accent fill-accent" />)}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Faculty Highlight */}
+      <section className="section-padding relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="glass-dark rounded-[4rem] p-12 lg:p-24 relative overflow-hidden">
+            <div className="absolute inset-0 bg-primary/20 mix-blend-overlay opacity-50" />
+            <div className="relative z-10 grid lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <span className="inline-block px-4 py-1.5 rounded-full bg-accent text-secondary text-[10px] font-sans font-black tracking-[0.2em] uppercase mb-6">
+                  EXPERT FACULTIES
+                </span>
+                <h2 className="text-5xl lg:text-7xl font-serif font-black text-white mb-8 leading-tight">
+                  Learn from <br /> <span className="text-accent italic">Industry</span> Leaders.
+                </h2>
+                <p className="text-white/60 text-lg leading-relaxed mb-10">
+                  Our faculty members aren't just teachers; they are practicing professionals, CAs, CSs, and academic scholars who bring real-world insights into the classroom.
+                </p>
+                <Link to="/about">
+                  <Button size="lg" className="rounded-full h-16 px-10 text-lg font-bold shadow-accent bg-accent text-secondary hover:bg-accent/90">
+                    Meet Our Team
+                    <ArrowRight size={20} className="ml-2" />
+                  </Button>
+                </Link>
+              </div>
+              <div className="grid grid-cols-2 gap-6">
+                {[
+                  { name: 'CA. B. L. Agrawal', role: 'Accounting' },
+                  { name: 'CA. Praveen Golchha', role: 'Taxation' },
+                  { name: 'CA. Sanjay Goyal', role: 'Audit' },
+                  { name: 'Expert Faculty', role: 'Economics' }
+                ].map((f, i) => (
+                  <div key={i} className="glass border-white/10 p-6 rounded-3xl text-center">
+                    <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center text-accent mx-auto mb-4">
+                      <GraduationCap size={24} />
+                    </div>
+                    <h4 className="text-white font-serif font-black text-lg">{f.name}</h4>
+                    <p className="text-white/40 text-xs font-bold uppercase tracking-widest">{f.role}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

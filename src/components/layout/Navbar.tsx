@@ -51,22 +51,22 @@ export function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-6">
         <div className={cn(
-          "glass rounded-full px-6 py-3 flex items-center justify-between transition-all duration-500 shadow-elegant",
-          isScrolled ? "bg-background/80" : "bg-background/40"
+          "glass rounded-[2rem] px-8 py-4 flex items-center justify-between transition-all duration-500 shadow-elegant",
+          isScrolled ? "bg-background/90" : "bg-background/60"
         )}>
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center text-white transition-transform group-hover:rotate-12">
-              <GraduationCap size={24} />
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center text-white transition-transform group-hover:rotate-12 shadow-glow">
+              <GraduationCap size={28} />
             </div>
             <div className="flex flex-col">
-              <span className="text-xl font-serif font-black tracking-tight leading-none text-primary">EXCEL</span>
-              <span className="text-[10px] font-sans font-bold tracking-[0.2em] text-foreground/60 uppercase">Educational Institute</span>
+              <span className="text-2xl font-serif font-black tracking-tight leading-none text-primary">EXCEL</span>
+              <span className="text-[10px] font-sans font-black tracking-[0.3em] text-foreground/40 uppercase">Educational Institute</span>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center gap-8">
+          <div className="hidden lg:flex items-center gap-10">
             {NAV_LINKS.map((link) => (
               <div 
                 key={link.name}
@@ -77,7 +77,7 @@ export function Navbar() {
                 <Link
                   to={link.href}
                   className={cn(
-                    "flex items-center gap-1 text-sm font-bold transition-colors hover:text-primary",
+                    "flex items-center gap-1.5 text-[13px] font-black tracking-widest uppercase transition-all hover:text-primary",
                     location.pathname === link.href ? "text-primary" : "text-foreground/80"
                   )}
                 >
@@ -93,14 +93,14 @@ export function Navbar() {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ duration: 0.2 }}
-                        className="absolute top-full left-1/2 -translate-x-1/2 pt-4 w-56"
+                        className="absolute top-full left-1/2 -translate-x-1/2 pt-6 w-64"
                       >
-                        <div className="bg-background/95 backdrop-blur-xl border border-border rounded-2xl shadow-2xl p-2 overflow-hidden">
+                        <div className="bg-background/95 backdrop-blur-3xl border border-border rounded-[2.5rem] shadow-2xl p-3 overflow-hidden noise">
                           {link.dropdown.map((sub) => (
                             <Link
                               key={sub.name}
                               to={sub.href}
-                              className="block px-4 py-2.5 text-sm font-medium rounded-xl hover:bg-primary hover:text-white transition-colors"
+                              className="block px-6 py-4 text-sm font-bold rounded-2xl hover:bg-primary hover:text-white transition-all hover:translate-x-1"
                             >
                               {sub.name}
                             </Link>
@@ -115,11 +115,11 @@ export function Navbar() {
           </div>
 
           {/* Action Button */}
-          <div className="hidden lg:flex items-center gap-4">
-            <Button variant="ghost" className="rounded-full font-bold">
+          <div className="hidden lg:flex items-center gap-6">
+            <Button variant="ghost" className="rounded-full font-black text-xs uppercase tracking-widest px-8">
               Enquiry
             </Button>
-            <Button className="rounded-full font-bold px-6 shadow-glow">
+            <Button className="rounded-full font-black text-xs uppercase tracking-widest px-10 shadow-glow h-12">
               Admission
             </Button>
           </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Target, Eye, Award, Users, BookOpen, GraduationCap, ArrowRight, Star } from 'lucide-react';
+import { Target, Eye, Award, Users, BookOpen, GraduationCap, ArrowRight, Star, History, Milestone } from 'lucide-react';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Button } from '@/components/ui/button';
 
@@ -23,6 +23,15 @@ const DIRECTORS = [
     image: 'https://www.exceledu.co.in/Content/home/images/TM-3.jpg',
     description: 'Strategic thinker and mentor, focusing on holistic development and professional ethics.'
   }
+];
+
+const TIMELINE = [
+  { year: '2007', event: 'Founded with a single classroom and a vision for professional excellence.' },
+  { year: '2012', event: 'Reached milestone of 5,000 successful students.' },
+  { year: '2015', event: 'Inaugurated state-of-the-art Excel Bhawan campus.' },
+  { year: '2018', event: 'Awarded Best Commerce Institute in Central India.' },
+  { year: '2021', event: 'Launched hybrid learning model with live online classes.' },
+  { year: '2024', event: 'Celebrated 172+ All India Rankers across CA, CS, and CMA.' },
 ];
 
 const VALUES = [
@@ -127,8 +136,9 @@ export default function About() {
       </section>
 
       {/* Directors Section */}
-      <section className="section-padding bg-secondary/5 relative">
-        <div className="max-w-7xl mx-auto px-6">
+      <section className="section-padding bg-secondary/5 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[100px] translate-x-1/2 -translate-y-1/2" />
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
           <SectionHeader 
             subtitle="Leadership"
             title="Meet Our Visionary Directors"
@@ -142,20 +152,67 @@ export default function About() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="group glass p-8 rounded-[2.5rem] shadow-elegant hover:shadow-glow transition-all"
+                className="group glass p-10 rounded-[3rem] shadow-elegant hover:shadow-glow transition-all noise"
               >
-                <div className="aspect-square rounded-[2rem] overflow-hidden mb-8 border-4 border-white shadow-lg">
+                <div className="aspect-[4/5] rounded-[2.5rem] overflow-hidden mb-8 border-4 border-white shadow-xl relative">
                   <img 
                     src={director.image} 
                     alt={director.name} 
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
+                    className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
                   />
+                  <div className="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 </div>
-                <h4 className="text-2xl font-serif font-black mb-1 text-primary">{director.name}</h4>
-                <div className="text-accent font-bold text-[10px] tracking-widest uppercase mb-4">{director.role}</div>
-                <p className="text-foreground/60 text-sm leading-relaxed">{director.description}</p>
+                <h4 className="text-3xl font-serif font-black mb-1 text-primary">{director.name}</h4>
+                <div className="text-accent font-bold text-xs tracking-widest uppercase mb-6">{director.role}</div>
+                <p className="text-foreground/60 text-base leading-relaxed">{director.description}</p>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Timeline Section */}
+      <section className="section-padding bg-secondary relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <SectionHeader 
+            light
+            subtitle="Our History"
+            title="A Journey of Milestones"
+            description="Since our inception, we have been committed to raising the bar of professional commerce education."
+          />
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="relative">
+              <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-white/10" />
+              <div className="space-y-12">
+                {TIMELINE.map((t, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="relative pl-20"
+                  >
+                    <div className="absolute left-[26px] top-0 w-3 h-3 rounded-full bg-accent shadow-accent" />
+                    <div className="text-4xl font-serif font-black text-accent mb-2">{t.year}</div>
+                    <p className="text-white/60 text-lg">{t.event}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            <div className="relative">
+              <div className="aspect-square rounded-[4rem] overflow-hidden shadow-2xl noise">
+                <img 
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1000" 
+                  alt="Students Learning" 
+                  className="w-full h-full object-cover opacity-80"
+                />
+              </div>
+              <div className="absolute -bottom-10 -right-10 glass p-10 rounded-[3rem] shadow-elegant max-w-xs">
+                <div className="text-5xl font-serif font-black text-primary mb-2">17+</div>
+                <div className="text-sm font-bold uppercase tracking-[0.2em] text-foreground/40 leading-none">Years of Legacy</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

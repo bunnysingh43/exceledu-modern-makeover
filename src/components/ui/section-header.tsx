@@ -19,37 +19,46 @@ export function SectionHeader({
   light = false,
   className 
 }: SectionHeaderProps) {
+  // Extract the last word to apply italic styling
+  const words = title.split(' ');
+  const lastWord = words.pop();
+  const titleStart = words.join(' ');
+
   return (
     <div className={cn(
-      "max-w-3xl mb-16",
+      "max-w-4xl mb-20",
       centered ? "mx-auto text-center" : "text-left",
       className
     )}>
       {subtitle && (
-        <motion.span
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className={cn(
-            "inline-block px-4 py-1 rounded-full text-[10px] font-sans font-black tracking-[0.2em] uppercase mb-4",
-            light ? "bg-white/10 text-white" : "bg-primary/10 text-primary"
-          )}
+          className="flex items-center justify-center gap-3 mb-6"
         >
-          {subtitle}
-        </motion.span>
+          <div className={cn("w-8 h-px", light ? "bg-white/20" : "bg-primary/20")} />
+          <span className={cn(
+            "text-[10px] font-sans font-black tracking-[0.3em] uppercase",
+            light ? "text-accent" : "text-primary"
+          )}>
+            {subtitle}
+          </span>
+          <div className={cn("w-8 h-px", light ? "bg-white/20" : "bg-primary/20")} />
+        </motion.div>
       )}
       
       <motion.h2
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.1 }}
+        transition={{ delay: 0.1, duration: 0.6 }}
         className={cn(
-          "text-4xl lg:text-5xl font-serif font-black mb-6 leading-[1.1]",
+          "text-5xl lg:text-7xl font-serif font-black mb-8 leading-[1.1] tracking-tighter",
           light ? "text-white" : "text-foreground"
         )}
       >
-        {title}
+        {titleStart} <span className="text-primary italic">{lastWord}</span>
       </motion.h2>
 
       {description && (
@@ -59,7 +68,8 @@ export function SectionHeader({
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
           className={cn(
-            "text-lg leading-relaxed",
+            "text-xl leading-relaxed max-w-2xl",
+            centered && "mx-auto",
             light ? "text-white/60" : "text-foreground/60"
           )}
         >

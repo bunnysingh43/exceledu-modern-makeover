@@ -58,34 +58,37 @@ export default function Gallery() {
       {/* Masonry Grid */}
       <section className="section-padding pt-0">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="columns-1 md:columns-2 lg:columns-3 gap-8 space-y-8">
+          <div className="columns-1 md:columns-2 lg:columns-3 gap-10 space-y-10">
             <AnimatePresence mode="popLayout">
               {filteredImages.map((item) => (
                 <motion.div
                   layout
                   key={item.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  whileHover={{ y: -5 }}
-                  className="relative group rounded-[2.5rem] overflow-hidden cursor-pointer shadow-elegant break-inside-avoid"
+                  whileHover={{ y: -10 }}
+                  transition={{ duration: 0.5 }}
+                  className="relative group rounded-[3.5rem] overflow-hidden cursor-pointer shadow-elegant break-inside-avoid noise border-4 border-white"
                   onClick={() => setSelectedImage(item)}
                 >
                   <img 
                     src={item.image} 
                     alt={item.title}
-                    className="w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full object-cover transition-all duration-1000 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col items-center justify-center p-8 text-center backdrop-blur-sm">
-                    <div className="w-16 h-16 rounded-full bg-white/20 flex items-center justify-center text-white mb-6 transform scale-0 group-hover:scale-100 transition-transform duration-500">
-                      <Search size={32} />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col items-center justify-end p-12 text-center backdrop-blur-[2px]">
+                    <div className="w-20 h-20 rounded-full bg-accent flex items-center justify-center text-secondary mb-8 transform translate-y-10 group-hover:translate-y-0 transition-transform duration-500 shadow-glow">
+                      <Search size={36} />
                     </div>
-                    <span className="text-[10px] font-sans font-black tracking-widest text-accent uppercase mb-2">
-                      {item.category}
-                    </span>
-                    <h4 className="text-2xl font-serif font-black text-white leading-tight">
-                      {item.title}
-                    </h4>
+                    <div className="transform translate-y-10 group-hover:translate-y-0 transition-transform duration-500 delay-100">
+                      <span className="text-[10px] font-sans font-black tracking-[0.3em] text-accent uppercase mb-3 block">
+                        {item.category}
+                      </span>
+                      <h4 className="text-3xl font-serif font-black text-white leading-tight">
+                        {item.title}
+                      </h4>
+                    </div>
                   </div>
                 </motion.div>
               ))}

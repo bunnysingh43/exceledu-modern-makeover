@@ -1,8 +1,9 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Award, Trophy, Star, Users, ArrowRight, Medal } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Award, Trophy, Star, Users, ArrowRight, Medal, Filter, Search } from 'lucide-react';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 const RANKERS = [
   { name: 'Aditya Jain', rank: 'AIR 1', year: '2024', course: 'CA Final', image: 'https://i.pravatar.cc/150?u=1' },
@@ -13,7 +14,15 @@ const RANKERS = [
   { name: 'Kriti Malhotra', rank: 'AIR 9', year: '2023', course: 'CA Inter', image: 'https://i.pravatar.cc/150?u=6' },
 ];
 
+const YEARS = ['All', '2024', '2023', '2022'];
+
 export default function Achievements() {
+  const [activeYear, setActiveYear] = useState('All');
+  
+  const filteredRankers = activeYear === 'All' 
+    ? RANKERS 
+    : RANKERS.filter(r => r.year === activeYear);
+
   return (
     <div className="flex flex-col">
       {/* Hero Header */}
@@ -43,42 +52,68 @@ export default function Achievements() {
       </section>
 
       {/* Top Rankers Highlight */}
-      <section className="section-padding">
+      <section className="section-padding overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeader 
             subtitle="Top Performers"
             title="Meet Our All India Rankers"
             description="Consistency is our middle name. Here are some of our brightest stars from the recent examination cycles."
           />
-          <div className="grid grid-cols-2 lg:grid-cols-3 gap-8">
-            {RANKERS.map((ranker, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="group relative"
+          
+          {/* Filters */}
+          <div className="flex flex-wrap justify-center gap-4 mb-16">
+            {YEARS.map((year) => (
+              <button
+                key={year}
+                onClick={() => setActiveYear(year)}
+                className={cn(
+                  "px-8 py-3 rounded-full text-xs font-black tracking-widest uppercase transition-all border-2",
+                  activeYear === year 
+                    ? "bg-primary border-primary text-white shadow-glow translate-y-[-2px]" 
+                    : "bg-white border-border text-foreground/40 hover:border-primary/20"
+                )}
               >
-                <div className="glass p-6 rounded-[2.5rem] shadow-elegant group-hover:shadow-glow transition-all flex flex-col items-center text-center">
-                  <div className="relative mb-6">
-                    <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg relative z-10">
-                      <img src={ranker.image} alt={ranker.name} className="w-full h-full object-cover" />
-                    </div>
-                    <div className="absolute -bottom-2 -right-2 w-12 h-12 bg-accent rounded-full flex items-center justify-center text-white font-serif font-black shadow-lg z-20">
-                      {ranker.rank.split(' ')[1]}
-                    </div>
-                  </div>
-                  <h4 className="text-2xl font-serif font-black mb-1 group-hover:text-primary transition-colors">{ranker.name}</h4>
-                  <div className="text-primary font-black text-xl mb-4 italic tracking-tighter">{ranker.rank}</div>
-                  <div className="flex items-center gap-4 py-3 px-6 rounded-full bg-primary/5 text-[10px] font-sans font-black tracking-widest uppercase text-foreground/40">
-                    <span>{ranker.course}</span>
-                    <span className="w-1 h-1 rounded-full bg-primary" />
-                    <span>Session {ranker.year}</span>
-                  </div>
-                </div>
-              </motion.div>
+                {year === 'All' ? 'All Sessions' : `Session ${year}`}
+              </button>
             ))}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <AnimatePresence mode="popLayout">
+              {filteredRankers.map((ranker, i) => (
+                <motion.div
+                  layout
+                  key={ranker.name}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.4 }}
+                  className="group relative"
+                >
+                  <div className="glass p-10 rounded-[4rem] shadow-elegant group-hover:shadow-glow transition-all flex flex-col items-center text-center relative overflow-hidden noise">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                    <div className="relative mb-10">
+                      <div className="w-40 h-40 rounded-full overflow-hidden border-8 border-white shadow-2xl relative z-10">
+                        <img src={ranker.image} alt={ranker.name} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                      </div>
+                      <motion.div 
+                        animate={{ y: [0, -5, 0] }}
+                        transition={{ duration: 3, repeat: Infinity }}
+                        className="absolute -bottom-4 left-1/2 -translate-x-1/2 bg-accent text-secondary px-6 py-2 rounded-full font-serif font-black shadow-xl z-20 whitespace-nowrap"
+                      >
+                        {ranker.rank}
+                      </motion.div>
+                    </div>
+                    <h4 className="text-3xl font-serif font-black mb-2 group-hover:text-primary transition-colors">{ranker.name}</h4>
+                    <div className="flex items-center gap-4 py-4 px-8 rounded-[2rem] bg-primary/5 text-[10px] font-sans font-black tracking-widest uppercase text-primary/60">
+                      <span>{ranker.course}</span>
+                      <span className="w-1.5 h-1.5 rounded-full bg-primary" />
+                      <span>{ranker.year}</span>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
         </div>
       </section>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CheckCircle2, ArrowRight, BookOpen, Clock, Users, GraduationCap, Award } from 'lucide-react';
+import { CheckCircle2, ArrowRight, BookOpen, Clock, Users, GraduationCap, Award, Check, Download, Info } from 'lucide-react';
 import { SectionHeader } from '@/components/ui/section-header';
 import { Button } from '@/components/ui/button';
 import { CourseCard } from '@/components/ui/course-card';
@@ -44,6 +44,13 @@ const ALL_COURSES = [
     levels: ['Accounts', 'Economics', 'Business Studies', 'English'],
     highlights: ['Conceptual Clarity', 'Board Exam Preparation', 'Career Counseling']
   }
+];
+
+const WHY_JOIN = [
+  { icon: <BookOpen className="text-primary" />, title: 'In-depth Curriculum', desc: 'Syllabus designed by industry experts with a focus on conceptual clarity and practical application.' },
+  { icon: <Clock className="text-accent" />, title: 'Timed Preparation', desc: 'Strict adherence to schedules ensuring students get ample time for revision before the final exams.' },
+  { icon: <Award className="text-primary" />, title: 'Proven Success', desc: 'A legacy of producing All India Rankers consistently year after year across all commerce streams.' },
+  { icon: <GraduationCap className="text-accent" />, title: 'Expert Mentorship', desc: 'Direct access to experienced CAs and CSs who provide guidance beyond just the textbooks.' },
 ];
 
 export default function Courses() {
@@ -93,28 +100,37 @@ export default function Courses() {
         </section>
 
         {/* Levels & Highlights */}
-        <section className="section-padding">
-          <div className="max-w-7xl mx-auto px-6">
+        <section className="section-padding overflow-hidden relative">
+          <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2" />
+          <div className="max-w-7xl mx-auto px-6 relative z-10">
             <div className="grid lg:grid-cols-2 gap-20">
               {/* Course Levels */}
               <div>
-                <h3 className="text-4xl font-serif font-black mb-10">Course Structure</h3>
-                <div className="space-y-4">
+                <div className="flex items-center gap-4 mb-10">
+                  <div className="w-1.5 h-12 bg-primary rounded-full" />
+                  <h3 className="text-5xl font-serif font-black">Course Structure</h3>
+                </div>
+                <div className="space-y-6">
                   {activeCourse.levels.map((level, i) => (
                     <motion.div
                       key={i}
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       transition={{ delay: i * 0.1 }}
-                      className="p-8 glass rounded-[2rem] border border-border flex items-center justify-between group hover:bg-primary/5 hover:border-primary/20 transition-all"
+                      className="p-10 glass rounded-[3rem] border border-border flex items-center justify-between group hover:bg-primary/5 hover:border-primary/20 transition-all noise"
                     >
-                      <div className="flex items-center gap-6">
-                        <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary font-serif font-black">
+                      <div className="flex items-center gap-8">
+                        <div className="w-16 h-16 rounded-[2rem] bg-primary/10 flex items-center justify-center text-primary font-serif font-black text-2xl">
                           0{i + 1}
                         </div>
-                        <span className="text-xl font-bold">{level}</span>
+                        <div>
+                          <span className="text-2xl font-serif font-black block mb-1">{level}</span>
+                          <span className="text-xs font-sans font-bold tracking-widest uppercase text-foreground/40">Next Batch Starts Soon</span>
+                        </div>
                       </div>
-                      <ArrowRight className="text-primary opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+                      <div className="w-12 h-12 rounded-full border-2 border-primary/20 flex items-center justify-center text-primary opacity-0 group-hover:opacity-100 group-hover:translate-x-1 transition-all">
+                        <ArrowRight size={20} />
+                      </div>
                     </motion.div>
                   ))}
                 </div>
@@ -122,23 +138,61 @@ export default function Courses() {
 
               {/* Course Highlights */}
               <div>
-                <h3 className="text-4xl font-serif font-black mb-10">Key Highlights</h3>
-                <div className="grid gap-6">
+                <div className="flex items-center gap-4 mb-10">
+                  <div className="w-1.5 h-12 bg-accent rounded-full" />
+                  <h3 className="text-5xl font-serif font-black">Key Highlights</h3>
+                </div>
+                <div className="grid gap-8">
                   {activeCourse.highlights.map((item, i) => (
-                    <div key={i} className="flex gap-4 group">
-                      <div className="w-10 h-10 rounded-full bg-accent/10 flex items-center justify-center text-accent shrink-0 group-hover:bg-accent group-hover:text-white transition-all">
-                        <CheckCircle2 size={20} />
+                    <motion.div 
+                      key={i} 
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                      className="flex gap-6 group p-8 rounded-[3rem] hover:bg-accent/5 transition-all"
+                    >
+                      <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center text-accent shrink-0 group-hover:bg-accent group-hover:text-white transition-all shadow-lg">
+                        <Check size={28} />
                       </div>
                       <div>
-                        <h4 className="text-xl font-serif font-black mb-1">{item}</h4>
-                        <p className="text-sm text-foreground/60 leading-relaxed">
-                          Expertly crafted learning path designed to ensure maximum retention and understanding of complex topics.
+                        <h4 className="text-2xl font-serif font-black mb-2">{item}</h4>
+                        <p className="text-base text-foreground/60 leading-relaxed">
+                          Expertly crafted learning path designed to ensure maximum retention and understanding of complex topics through practical examples.
                         </p>
                       </div>
-                    </div>
+                    </motion.div>
                   ))}
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Why Join Section */}
+        <section className="section-padding bg-secondary/5 relative">
+          <div className="max-w-7xl mx-auto px-6">
+            <SectionHeader 
+              subtitle="Why Excel"
+              title="The Advantage You Deserve"
+              description="Our methodology is built on years of experience and a deep understanding of what it takes to succeed in professional exams."
+            />
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {WHY_JOIN.map((item, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="glass p-10 rounded-[3rem] shadow-elegant hover:shadow-glow transition-all noise group"
+                >
+                  <div className="mb-8 transform group-hover:scale-110 group-hover:rotate-12 transition-transform">
+                    {React.cloneElement(item.icon as React.ReactElement, { size: 40 })}
+                  </div>
+                  <h4 className="text-2xl font-serif font-black mb-4">{item.title}</h4>
+                  <p className="text-foreground/60 text-sm leading-relaxed">{item.desc}</p>
+                </motion.div>
+              ))}
             </div>
           </div>
         </section>
